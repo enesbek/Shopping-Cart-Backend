@@ -1,7 +1,5 @@
 FROM golang:1.17
 
-ENV DBNAME="db"
-
 WORKDIR /go/src/backend
 COPY . .
 
