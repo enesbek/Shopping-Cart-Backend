@@ -1,35 +1,17 @@
-version: 2.1
-
-jobs:
-  setup:
-    working-directory: /Users/enes.bek/Shopping-Cart-Backend/backend
-    docker:
-      - image: circleci/golang:1.17
-    steps:
-      - checkout:
-          path: /Users/enes.bek/Shopping-Cart-Backend/backend
-      restore_cache:
-        keys:
-          - go-mod-v4-{{ checksum "go.sum" }}
-      - run:
-        name: Install Dependencies
-        command: go mod download
-      - save_cache:
-        key: go-mod-v4-{{ checksum "go.sum" }}
-        paths:
-          - "/go/pkg/mod"
-
-
-  build:
-    docker:
-      - image: circleci/golang:1.17
+version: 2
+jobs: # basic units of work in a run
+  build: # runs not using Workflows must have a `build` job as entry point
+    docker: # run the steps with Docker
+      # CircleCI Go images available at: https://hub.docker.com/r/circleci/golang/
+      - image: circleci/golang:1.16
         auth:
           username: enesbek
-          password: test123test
-    - image: circleci/postgres:9.6-alpine
+          password: test123test  # context / project UI env-var reference
+      # CircleCI PostgreSQL images available at: https://hub.docker.com/r/circleci/postgres/
+      - image: circleci/postgres:9.6-alpine
         auth:
           username: enesbek
-          password: test123test # context / project UI env-var reference
+          password: test123test  # context / project UI env-var reference
         environment: # environment variables for primary container
           POSTGRES_USER: postgres
           POSTGRES_DB: postgres
