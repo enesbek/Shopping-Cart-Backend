@@ -24,7 +24,7 @@ jobs: # basic units of work in a run
 
       - restore_cache: # restores saved cache if no changes are detected since last run
           keys:
-            - go-mod-v4-{{ checksum "go.sum" }}
+            - go-mod-v4-{{ checksum "backend/go.sum" }}
 
       #  Wait for Postgres to be ready before proceeding
       - run:
